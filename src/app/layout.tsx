@@ -6,6 +6,8 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import AppLayout from "@/components/layout/AppLayout";
+import ConfirmationModal from "@/components/ui/ConfirmationModal";
+import Toaster from "@/components/ui/toaster";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -36,6 +38,8 @@ export default function RootLayout({
         className={`${bricolage.variable} ${poppins.variable} ${jakartaplus.variable} bg-white text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50`}
       >
         <AppLayout showSidebar={true}>{children}</AppLayout>
+        <ConfirmationModal />
+        <Toaster />
       </body>
     </html>
   );

@@ -113,7 +113,7 @@
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
+  --primary: #a47864;
   --primary-foreground: oklch(0.208 0.042 265.755);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
@@ -143,6 +143,9 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html {
+    @apply transition-colors duration-300 ease-in-out;
   }
   body {
     @apply bg-background text-foreground font-sans;
@@ -184,57 +187,111 @@
   .grid-sidebar {
     @apply grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6;
   }
-  .animate-fade-in {
-    animation: fadeIn 0.3s ease-in;
+  .grid-gallery {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
   }
-  .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
+  .grid-hero {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8 items-center;
   }
-  .animate-slide-in {
-    animation: slideIn 0.3s ease-out;
+  .grid-form {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
   }
+
   .animate-scale-in {
     animation: scaleIn 0.3s ease-out;
   }
 }
 
 @layer utilities {
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
+  .animate-fade-in {
+    animation: fadeIn 300ms ease-in-out;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 300ms ease-in-out;
+  }
+
+  .animate-slide-in-bottom {
+    animation: slideInBottom 300ms ease-in-out;
+  }
+
+  .animate-slide-out-bottom {
+    animation: slideOutBottom 300ms ease-in-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 300ms ease-in-out;
+  }
+
+  .animate-hover-scale {
+    @apply transition-transform duration-200 ease-in-out;
+    &:hover {
+      @apply scale-105;
     }
   }
-  @keyframes slideUp {
-    from {
-      transform: translateY(10px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
+
+  .animate-fade-out {
+    animation: fadeOut 300ms ease-in-out;
   }
-  @keyframes slideIn {
-    from {
-      transform: translateX(-10px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  @keyframes scaleIn {
-    from {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInBottom {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutBottom {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

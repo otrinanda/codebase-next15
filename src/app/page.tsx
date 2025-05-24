@@ -1,8 +1,59 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, AlertCircle, Info } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useModalStore } from "@/lib/stores/modalStore";
+import { useThemeStore } from "@/lib/stores/themeStore";
+import { useToastStore } from "@/lib/stores/toastStore";
 
 export default function DesignSystemDocs() {
+  const { isDarkMode, toggleDarkMode } = useThemeStore();
+  const { openConfirmationModal } = useModalStore();
+  const { addToast } = useToastStore();
+
+  const handleThemeChange = () => {
+    openConfirmationModal(
+      "Ubah Tema",
+      `Apakah Anda yakin ingin mengubah ke tema ${
+        isDarkMode ? "terang" : "gelap"
+      }?`,
+      toggleDarkMode
+    );
+  };
+
+  const handleShowToast = () => {
+    addToast({
+      title: "Notifikasi Demo",
+      description: "Ini adalah contoh notifikasi menggunakan toast kustom.",
+      variant: "success",
+      duration: 3000,
+    });
+  };
+  const handleShowMultipleToasts = () => {
+    addToast({
+      title: "Toast Pertama",
+      description: "Muncul pertama dan akan didorong ke atas.",
+      variant: "success",
+      duration: 3000,
+    });
+    setTimeout(() => {
+      addToast({
+        title: "Toast Kedua",
+        description: "Muncul kedua, mendorong toast pertama ke atas.",
+        variant: "success",
+        duration: 3000,
+      });
+    }, 1000);
+    setTimeout(() => {
+      addToast({
+        title: "Toast Error",
+        description: "Contoh toast error.",
+        variant: "error",
+        duration: 3000,
+      });
+    }, 2000);
+  };
+
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-heading text-4xl font-bold tracking-tight text-primary-500 mb-8">
@@ -38,7 +89,7 @@ export default function DesignSystemDocs() {
             // </div>
             <Card
               key={color.name}
-              className="animate-scale-in duration-300"
+              className="animate-scale-in duration-300 animate-hover-scale"
               style={{ backgroundColor: color.value }}
             >
               <CardHeader>
@@ -156,6 +207,124 @@ export default function DesignSystemDocs() {
             </div>
           </div>
         </div>
+        {/* Grid Gallery */}
+        <div>
+          <h3 className="text-subheading text-xl font-medium text-primary-700 mb-2">
+            Grid Gallery
+          </h3>
+          <p className="text-body text-primary-900 mb-4">
+            Grid untuk galeri atau kartu, responsif dari 1 kolom di mobile, 2 di
+            sm, 3 di lg.
+          </p>
+          <div className="grid-gallery">
+            <Card className="animate-scale-in duration-300 animate-hover-scale">
+              <CardHeader>
+                <CardTitle className="text-subheading">Kartu 1</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-body">Deskripsi kartu pertama.</p>
+              </CardContent>
+            </Card>
+            <Card className="animate-scale-in duration-300 delay-100 animate-hover-scale">
+              <CardHeader>
+                <CardTitle className="text-subheading">Kartu 2</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-body">Deskripsi kartu kedua.</p>
+              </CardContent>
+            </Card>
+            <Card className="animate-scale-in duration-300 delay-200 animate-hover-scale">
+              <CardHeader>
+                <CardTitle className="text-subheading">Kartu 3</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-body">Deskripsi kartu ketiga.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Grid Hero */}
+        <div>
+          <h3 className="text-subheading text-xl font-medium text-primary-700 mb-2">
+            Grid Hero
+          </h3>
+          <p className="text-body text-primary-900 mb-4">
+            Grid untuk hero section, dengan teks dan gambar berdampingan di lg+.
+          </p>
+          <div className="grid-hero">
+            <div className="animate-fade-in duration-300">
+              <h4 className="text-heading text-3xl font-bold text-primary-500 mb-4">
+                Selamat Datang
+              </h4>
+              <p className="text-body text-primary-900 mb-4">
+                Ini adalah teks hero untuk menarik perhatian pengguna.
+              </p>
+              <Button variant="default" className="text-button">
+                Pelajari Lebih Lanjut
+              </Button>
+            </div>
+            <div className="bg-[var(--primary-100)] h-64 rounded-lg animate-scale-in duration-300">
+              <p className="text-body p-4">Placeholder untuk gambar</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Grid Form */}
+        <div>
+          <h3 className="text-subheading text-xl font-medium text-primary-700 mb-2">
+            Grid Form
+          </h3>
+          <p className="text-body text-primary-900 mb-4">
+            Grid untuk formulir, dengan input berdampingan di sm+.
+          </p>
+          <div className="grid-form">
+            <Input
+              placeholder="Nama Depan"
+              className="animate-slide-in duration-300"
+            />
+            <Input
+              placeholder="Nama Belakang"
+              className="animate-slide-in duration-300 delay-100"
+            />
+            <Input
+              placeholder="Email"
+              type="email"
+              className="animate-slide-in duration-300 delay-200"
+            />
+            <Input
+              placeholder="Telepon"
+              type="tel"
+              className="animate-slide-in duration-300 delay-300"
+            />
+          </div>
+        </div>
+      </section>
+      {/* Contoh Aksi dengan Modal */}
+      <section className="mb-12">
+        <h2 className="text-subheading text-2xl font-semibold text-primary-600 mb-4">
+          Contoh Aksi
+        </h2>
+        <p className="text-body text-primary-900 mb-4">
+          Klik tombol di bawah untuk memicu modal konfirmasi.
+        </p>
+        <Button variant="default" onClick={handleThemeChange} className="">
+          Ubah Tema
+        </Button>
+        <Button
+          variant="outline"
+          onClick={handleShowToast}
+          className="animate-scale-in duration-300"
+        >
+          Tampilkan Toast
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={handleShowMultipleToasts}
+          className="animate-scale-in duration-300"
+        >
+          Tampilkan Multiple Toasts
+        </Button>
       </section>
 
       {/* Animasi */}
